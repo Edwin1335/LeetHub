@@ -1,20 +1,25 @@
+#   a   b   b   a
+#           l   
+#               i
 #
-#   "t m m z u x t"
-#                i
-#        S
-
+#   seen = {'a': 0, 'b':1, }
+#   longest = 3
+#   
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        left = 0
+        lenght = len(s)
         longest = 0
-        start = 0
-        repChar = {}
-
-        for i in range(len(s)):
-            if s[i] in repChar and start <= repChar[s[i]]:
-                start = repChar[s[i]] + 1
-            else:
-                longest = max(longest, i - start + 1)
-            repChar[s[i]] = i
+        seen = {}
+        
+        for index, char in enumerate(s):
+            if char in seen and left <= seen[char]:
+                left = seen[char] + 1
+            seen[char] = index
+            longest = max(longest, (index - left + 1))
+            # print("Left ",left, "Right ", index, longest)
 
         return longest
+            
+                
