@@ -4,20 +4,25 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        arr = []
-        self.__levelRec(root, arr, 0)
-        return arr
 
-    def __levelRec(self, root, arr: list(), height: int()) -> list():
+from collections import deque
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:        
         if not root:
-            return
-        if height >= len(arr):
-            newarr = []
-            arr.append(newarr)
-        arr[height].append(root.val)
-        self.__levelRec(root.left, arr, height+1)
-        self.__levelRec(root.right, arr, height+1)
+            return None
         
+        out = []
+        q = deque()
+        q.append(root)
         
+        while q:
+            to_append = list()
+            for _ in range(len(q)):
+                popped = q.popleft()
+                to_append.append(popped.val)
+                if popped.left:
+                    q.append(popped.left)
+                if popped.right:
+                    q.append(popped.right)
+            out.append(to_append)
+        return out
